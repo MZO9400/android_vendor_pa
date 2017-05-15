@@ -1,4 +1,4 @@
-# Copyright (C) 2015 ParanoidAndroid Project
+# Copyright (C) 2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,25 +17,37 @@ ifeq (pa_oneplus2,$(TARGET_PRODUCT))
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Include ParanoidAndroid common configuration
 TARGET_BOOT_ANIMATION_RES := 1080
 
-include device/qcom/common/common.mk
-
-# Inherit AOSP device configuration
+# Inherit from oneplus2 device
 $(call inherit-product, device/oneplus/oneplus2/device.mk)
 
+# Inherit qualcomm common stuff
+include device/qcom/common/common.mk
+
+# Include paranoid stuff
 include vendor/pa/main.mk
 
-# Override AOSP build properties
 PRODUCT_NAME := pa_oneplus2
 PRODUCT_DEVICE := oneplus2
-PRODUCT_BRAND := OnePlus
-PRODUCT_MODEL := ONE A2003
 PRODUCT_MANUFACTURER := OnePlus
+PRODUCT_BRAND := OnePlus
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
+
+TARGET_VENDOR_PRODUCT_NAME := OnePlus2
+TARGET_VENDOR_DEVICE_NAME := OnePlus2
+PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=OnePlus2 PRODUCT_NAME=OnePlus2
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    BUILD_FINGERPRINT=OnePlus/OnePlus2/OnePlus2:6.0.1/MMB29M/1447841200:user/release-keys \
+    PRIVATE_BUILD_DESC="OnePlus2-user 6.0.1 MMB29M 15 dev-keys"
+
+PRODUCT_SYSTEM_PROPERTY_BLACKLIST += ro.product.model
+
+TARGET_VENDOR := oneplus
 
 endif
